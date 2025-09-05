@@ -50,7 +50,7 @@ public class Program {
 
     private static void processAnswer(String answer){
         // abrir el gif correcto
-        String fileName = (answer.contains("valid")) ? "/bien.gif" : "/mal.gif";
+        String fileName = (answer.contains("a valid")) ? "/bien.gif" : "/mal.gif";
         Icon gif = new ImageIcon(Objects.requireNonNull(Program.class.getResource(fileName)));
 
         JOptionPane.showMessageDialog(null, answer, "AFD Numeric Constants", JOptionPane.PLAIN_MESSAGE, gif);
