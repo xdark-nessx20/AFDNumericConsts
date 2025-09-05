@@ -2,27 +2,62 @@ package view;
 
 import model.Automaton;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import java.awt.Color;
+import java.awt.Font;
+
 public class Program {
+    static {
+        // Fondo VINOTINTO
+        UIManager.put("OptionPane.background", Color.decode("#581845"));
+        UIManager.put("Panel.background", Color.decode("#581845"));
+
+
+        UIManager.put("OptionPane.messageForeground", Color.WHITE);
+        UIManager.put("Label.foreground", Color.WHITE);
+
+
+        UIManager.put("Button.background", Color.WHITE);
+        UIManager.put("Button.foreground", Color.decode("#581845"));
+        UIManager.put("Button.select", Color.decode("#009EE8")); // AZUL pa cuando clickes
+        UIManager.put("Button.focus", Color.decode("#009EE8"));
+
+        // Fuente
+        UIManager.put("Button.font", new Font("Montserrat", Font.ITALIC + Font.BOLD, 13));
+        UIManager.put("OptionPane.messageFont", new Font("Montserrat", Font.ITALIC + Font.BOLD, 13));
+    }
+
     public static void main(String[] args) {
         Automaton afd = new Automaton();
+        Icon closeGif = new ImageIcon(Program.class.getResource("/close.gif"));
+        Icon holaGif = new ImageIcon(Program.class.getResource("/hola.gif"));
+        while(true){
+            String num = (String) JOptionPane.showInputDialog(null,
+                    "Type a numeric constant chain: \nDon't write if you wanna exit", "AFD Numeric Constants",
+                    JOptionPane.PLAIN_MESSAGE, holaGif, null, null);
+            if(num == null || num.isBlank()) break;
 
-        System.out.println();
-        //Valid
-        System.out.println(afd.verify("2546"));
-        System.out.println(afd.verify("24."));
-        System.out.println(afd.verify(".5"));
-        System.out.println(afd.verify("314e-2"));
-        System.out.println(afd.verify("-4.2e2"));
-        System.out.println(afd.verify("+.25"));
-
-        System.out.println();
-        //Invalid
-        System.out.println(afd.verify("-."));
-        System.out.println(afd.verify("e2"));
-        System.out.println(afd.verify("."));
-        System.out.println(afd.verify("-.+"));
-        System.out.println(afd.verify("--4"));
-        System.out.println(afd.verify("7.e"));
-        System.out.println(afd.verify(".2e-1.5"));
+            String afdAnswer = afd.verify(num);
+            processAnswer(afdAnswer);
+        }
+        JOptionPane.showMessageDialog(null, "Closing... Press OK", "AFD Numeric Constants",
+                JOptionPane.PLAIN_MESSAGE, closeGif);
+        System.exit(0);
     }
+
+    private static void processAnswer(String answer){
+        // abrir el gif correcto
+        String fileName = (answer.contains("a valid")) ? "/bien.gif" : "/mal.gif";
+        Icon gif = new ImageIcon(Program.class.getResource(fileName));
+
+        JOptionPane.showMessageDialog(null, answer, "AFD Numeric Constants", JOptionPane.PLAIN_MESSAGE, gif);
+    }
+    /*
+    Probar
+    Bien:"2546", "24.", ".5", "314e-2", "-4.2e2", "+.25"
+    Mal: "-.", "e2", ".", "-.+", "--4", "7.e", ".2e-1.5"
+    */
 }
