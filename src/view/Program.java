@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Objects;
 
 public class Program {
     static {
@@ -32,12 +33,12 @@ public class Program {
 
     public static void main(String[] args) {
         Automaton afd = new Automaton();
-        Icon closeGif = new ImageIcon(Program.class.getResource("/close.gif"));
-        Icon holaGif = new ImageIcon(Program.class.getResource("/hola.gif"));
+        Icon closeGif = new ImageIcon(Objects.requireNonNull(Program.class.getResource("/close.gif")));
+        Icon helloGif = new ImageIcon(Objects.requireNonNull(Program.class.getResource("/hola.gif")));
         while(true){
             String num = (String) JOptionPane.showInputDialog(null,
                     "Type a numeric constant chain: \nDon't write if you wanna exit", "AFD Numeric Constants",
-                    JOptionPane.PLAIN_MESSAGE, holaGif, null, null);
+                    JOptionPane.PLAIN_MESSAGE, helloGif, null, null);
             if(num == null || num.isBlank()) break;
 
             String afdAnswer = afd.verify(num);
@@ -45,13 +46,12 @@ public class Program {
         }
         JOptionPane.showMessageDialog(null, "Closing... Press OK", "AFD Numeric Constants",
                 JOptionPane.PLAIN_MESSAGE, closeGif);
-        System.exit(0);
     }
 
     private static void processAnswer(String answer){
         // abrir el gif correcto
-        String fileName = (answer.contains("a valid")) ? "/bien.gif" : "/mal.gif";
-        Icon gif = new ImageIcon(Program.class.getResource(fileName));
+        String fileName = (answer.contains("valid")) ? "/bien.gif" : "/mal.gif";
+        Icon gif = new ImageIcon(Objects.requireNonNull(Program.class.getResource(fileName)));
 
         JOptionPane.showMessageDialog(null, answer, "AFD Numeric Constants", JOptionPane.PLAIN_MESSAGE, gif);
     }
