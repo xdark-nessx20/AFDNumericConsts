@@ -28,7 +28,7 @@ public class Automaton {
 
     private String formattedAnswer(String number, boolean isAcceptationState) {
         return String.format(
-            ("'%s' is an " + (isAcceptationState? "valid":"invalid")
+            ("'%s' is " + (isAcceptationState? "a valid":"an invalid")
                 + " const"), number
         );
     }
